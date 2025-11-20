@@ -13,3 +13,51 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model DiningLocation {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  menus Menu[]
+  @@map("locations")
+}
+
+model Menu {
+  id Int @id @default(autoincrement())
+  name String
+  mealType String
+  date DateTime @default(now())
+  diningLocationId Int
+  diningLocation DiningLocation @relation(fields: [diningLocationId], references: [id])
+  @@map("menus")
+}
+
+model FoodItem {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  portionSize String
+  nutrition Json? @db.JsonB
+  ingredients String[]
+  allergens String[]
+  isVegetarian Boolean
+  isVegan Boolean
+  favoredBy User[] @relation("UserFavorites")
+  @@map("foods")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String
+  role Role @default(USER)
+  preferences Json? @db.JsonB 
+  notificationEnabled Boolean @default(false)
+  favoriteFoods FoodItem[] @relation("UserFavorites")
+  @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
