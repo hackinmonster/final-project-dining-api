@@ -31,7 +31,6 @@ export async function getAll(filter) {
 }
 
 export async function create(location) {
-
     const newLocation = await prisma.diningLocation.create({
         data: location
     });
