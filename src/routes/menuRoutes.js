@@ -2,7 +2,8 @@ import express from 'express';
 
 import {
     getAllMenusHandler,
-    getMenuByIdHandler
+    getMenuByIdHandler,
+    createMenuHandler
 } from '../controllers/menuController.js'
 
 import {
@@ -10,15 +11,17 @@ import {
 } from '../middleware/locationValidators.js'
 
 import {
-    validateMenuQuery
+    validateMenuQuery,
+    validateCreateMenu
 } from '../middleware/menuValidators.js'
 
 const router = express.Router();
 
 router.get('/', validateMenuQuery, getAllMenusHandler);
+
 router.get('/:id', validateId, getMenuByIdHandler);
 
-
+router.post('/', validateCreateMenu, createMenuHandler);
 
 
 

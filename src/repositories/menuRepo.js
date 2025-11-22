@@ -44,3 +44,12 @@ export async function getMenu(id) {
 
     return menu;
 }
+
+export async function create(menu) {
+
+    const newMenu = prisma.menu.create({
+        data: menu
+    });
+
+    return newMenu;
+}
