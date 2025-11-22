@@ -1,3 +1,4 @@
+import e from "cors";
 import { getAllUsers, getUserById, updateUser, deleteUser } from "../services/userService.js";
 
 export async function getAllUsersHandler(req, res){
@@ -17,8 +18,7 @@ export async function updateUserHandler(req, res) {
 
   if (req.body.email) updates.email = req.body.email;
   if (req.body.password) updates.password = req.body.password;
-  // TODO: fix false not going thru
-  if (req.body.notificationEnabled) updates.notificationEnabled = Boolean(req.body.notificationEnabled);
+  if (req.body.notificationEnabled !== "undefined") updates.notificationEnabled = JSON.parse(req.body.notificationEnabled);
 
   const updatedUser = await updateUser(id, updates);
   res.status(200).json(updatedUser);
