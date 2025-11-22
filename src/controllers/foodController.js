@@ -19,7 +19,9 @@ export async function createFoodItemHandler(req,res) {
 }
 
 export async function getFoodItemByIdHandler(req,res) {
-    res.status(200).json()
+    let id = parseInt(req.params.id);
+    let foodItem = await getFoodItemById(id);
+    res.status(200).json(foodItem)
 }
 
 export async function updateFoodItemHandler(req, res) {
