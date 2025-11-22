@@ -14,6 +14,7 @@ export async function getUserById(id) {
 }
 
 export async function updateUser(id, data) {
+  console.log()
   const updatedUser = await update(id, data);
   if (updatedUser) return updatedUser;
   else {

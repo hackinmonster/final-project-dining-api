@@ -29,6 +29,7 @@ export async function getById(id) {
 
 export async function update(id, updates) {
   try {
+    console.log(id);
     const updatedUser = await prisma.user.update({
       where: { id },
       data: updates,

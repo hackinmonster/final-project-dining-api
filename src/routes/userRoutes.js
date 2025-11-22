@@ -6,7 +6,7 @@ import { validateUpdateUser } from "../middleware/userValidators.js";
 const router = express.Router();
 
 router.get('/', authenticate, authorizeRoles('ADMIN'), getAllUsersHandler);
-router.get('/:id', authenticate, getUserByIdHandler); 
-router.put('/:id', authenticate, validateUpdateUser, updateUserHandler);
-router.delete('/:id', authenticate, deleteUserHandler);
+router.get('/me', authenticate, getUserByIdHandler); 
+router.put('/me', authenticate, validateUpdateUser, updateUserHandler);
+router.delete('/me', authenticate, deleteUserHandler);
 export default router;
