@@ -35,7 +35,6 @@ export const validateCreateLocation = [
     handleValidationErrors
 ]
 
-//array of middleware
 export const validateId = [
     param('id')
         .isInt({min:1})
