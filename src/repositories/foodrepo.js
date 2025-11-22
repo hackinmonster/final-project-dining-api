@@ -19,3 +19,29 @@ export async function create(foodItem) {
     })
     return newfoodItem;
 }
+
+export async function update(id, updates) {
+    try {
+        const updatedFoodItem = await prisma.FoodItem.update({
+            where: { id },
+            data: updates,
+        });
+
+        return updatedFoodItem;
+    }catch(error) { 
+        if((error.code === 'P2025')) return null;
+        throw error;
+    }
+}
+
+export async function remove(id) {
+    try{
+        const result = await prisma.FoodItem.delete({
+            where: { id }
+        });
+        return result;
+    }catch(error) {
+        if(error.code === 'P2025') return null;
+        throw error;
+    }
+}
