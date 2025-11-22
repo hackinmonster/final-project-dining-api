@@ -6,7 +6,10 @@ import locationRoutes from './routes/locationRoutes.js';
 import foodRoutes from './routes/foodRoutes.js';
 import menuRoutes from './routes/menuRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import authRoutes from './routes/authRoutes.js'
+import authRoutes from './routes/authRoutes.js';
+
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +17,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
+
+const specs = YAML.load('./docs/openapi.yaml');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/api/locations', locationRoutes);
 app.use('/api/foods', foodRoutes);
