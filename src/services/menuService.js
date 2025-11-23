@@ -1,10 +1,12 @@
 import {
     getAll,
     getMenu,
-    create
-} from '../repositories/menuRepo.js'
+    create,
+    update,
+    remove
+} from "../repositories/menuRepo.js";
 
-import prisma from '../config/db.js';
+import prisma from "../config/db.js";
 
 
 export async function getAllMenus(filter) {
@@ -66,8 +68,8 @@ export async function getMenuById(id) {
 }
 
 export async function updateMenu(id, data) {
-    let updatedMenu = await update(id, data);
-    return updatedMenu;
+    if (data.date) data.date = new Date(data.date);
+    return await update(id, data);
 }
 
 export async function deleteMenu(id) {

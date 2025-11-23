@@ -53,3 +53,26 @@ export async function create(menu) {
 
     return newMenu;
 }
+
+export async function update(id, data) {
+    try {
+        return await prisma.menu.update({
+            where: { id },
+            data
+        });
+    } catch (err) {
+        if (err.code === "P2025") return null;
+        throw err;
+    }
+}
+
+export async function remove(id) {
+    try {
+        return await prisma.menu.delete({
+            where: { id }
+        });
+    } catch (err) {
+        if (err.code === "P2025") return null;
+        throw err;
+    }
+}

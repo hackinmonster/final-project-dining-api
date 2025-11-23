@@ -70,3 +70,37 @@ export const validateCreateMenu = [
         .toInt(),
     
 ]
+
+export const validateUpdateMenu = [
+    body('name')
+        .optional()
+        .trim()
+        .escape()
+        .notEmpty()
+        .withMessage("name cannot be empty"),
+
+    body('mealType')
+        .optional()
+        .trim()
+        .escape()
+        .notEmpty()
+        .withMessage("mealType cannot be empty"),
+
+    body('date')
+        .optional()
+        .trim()
+        .escape()
+        .isDate()
+        .withMessage('Invalid date format')
+        .toDate(),
+
+    body('diningLocationId')
+        .optional()
+        .trim()
+        .escape()
+        .isInt({ min: 1 })
+        .withMessage('diningLocationId must be a positive integer')
+        .toInt(),
+
+    handleValidationErrors
+];
