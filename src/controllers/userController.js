@@ -18,7 +18,7 @@ export async function updateUserHandler(req, res) {
   const updates = {};
 
   if (req.body.email) updates.email = req.body.email;
-  if (req.body.password) updates.password = req.body.password;
+  if (req.body.password) updates.password = await bcrypt.hash(req.body.password, 10);
   if (typeof req.body.notificationEnabled !== "undefined") updates.notificationEnabled = JSON.parse(req.body.notificationEnabled);
 
   const updatedUser = await updateUser(id, updates);
