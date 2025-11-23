@@ -1,4 +1,5 @@
 import e from "cors";
+import bcrypt from 'bcrypt';
 import { getAllUsers, getUserById, updateUser, deleteUser } from "../services/userService.js";
 
 export async function getAllUsersHandler(req, res){
