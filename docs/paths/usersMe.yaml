@@ -1,5 +1,5 @@
 get:
-  summary: Get current User 
+  summary: Get current user 
   tags:
     - Users
   security:
@@ -13,14 +13,19 @@ get:
           schema:
             type: array
             items:
-              $ref: ../components/schemas/User.yaml
+              $ref: ../components/schemas/userId.yaml
 put:
-  summary: Update user info 
+  summary: Update current user's information
   tags:
     - Users
   security:
   - bearerAuth: []
-  # TODO: more responses
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/updateUser.yaml
   responses:
     '200':
       description: OK
@@ -29,5 +34,12 @@ put:
           schema:
             type: array
             items:
-              $ref: ../components/schemas/User.yaml
-  
+              $ref: ../components/schemas/userId.yaml
+delete:
+  summary: Delete current user
+  tags:
+    - User
+  responses:
+    '204':
+      description: OK
+  # TODO: Add responses
