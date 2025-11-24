@@ -1,0 +1,11 @@
+type: object
+properties:
+  email:
+    type: string
+    example: test@gmail.com
+  password:
+    type: string
+    example: test1234
+  notificationEnabled:
+    type: boolean
+    example: false
