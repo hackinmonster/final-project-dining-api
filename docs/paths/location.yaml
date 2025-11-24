@@ -1,0 +1,27 @@
+get:
+  summary: Get all locations
+  tags:
+    - Dining Locations 
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/locationId.yaml
+post:
+  summary: Create location 
+  tags:
+    - Dining Locations
+  # TODO: more responses
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/locationId.yaml

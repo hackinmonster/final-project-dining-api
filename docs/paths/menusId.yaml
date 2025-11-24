@@ -1,0 +1,39 @@
+get:
+  summary: Get Menu by Id
+  tags:
+    - Menus
+  parameters:
+    - name: id 
+      in: path
+      schema:
+        type: integer
+      required: true
+  # TODO: Add responses
+put:
+  summary: Update Menu by Id
+  tags:
+    - Menus
+  parameters:
+    - name: id 
+      in: path
+      schema:
+        type: integer
+      required: true
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/menus.yaml
+  # TODO: Add responses
+delete:
+  summary: Delete Menu by Id
+  tags:
+    - Menus
+  parameters:
+    - name: id 
+      in: path
+      schema:
+        type: integer
+      required: true
+  # TODO: Add responses

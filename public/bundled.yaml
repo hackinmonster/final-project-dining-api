@@ -1,0 +1,335 @@
+openapi: 3.1.0
+info:
+  title: Dining API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+paths:
+  /auth/signup:
+    post:
+      summary: User Registration
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userAccount'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createdUser'
+        '400':
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+  /auth/login:
+    post:
+      summary: User Login
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userAccount'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token'
+        '400':
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+  /locations:
+    get:
+      summary: Get all locations
+      tags:
+        - Dining Locations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/locationId'
+    post:
+      summary: Create location
+      tags:
+        - Dining Locations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/locationId'
+  /locations/{id}:
+    get:
+      summary: Get Location by Id
+      tags:
+        - Dining Locations
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+    put:
+      summary: Update Location by Id
+      tags:
+        - Dining Locations
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/location'
+    delete:
+      summary: Delete location by Id
+      tags:
+        - Dining Locations
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+  /menus:
+    get:
+      summary: Get all menus
+      tags:
+        - Menus
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/menusId'
+    post:
+      summary: Create menu
+      tags:
+        - Menus
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/menusId'
+  /menus/{id}:
+    get:
+      summary: Get Menu by Id
+      tags:
+        - Menus
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+    put:
+      summary: Update Menu by Id
+      tags:
+        - Menus
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/menus'
+    delete:
+      summary: Delete Menu by Id
+      tags:
+        - Menus
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+  /users:
+    get:
+      summary: List all users (admin-only)
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /users/me:
+    get:
+      summary: Get current User
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    put:
+      summary: Update user info
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    userAccount:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@uncc.edu
+        password:
+          type: string
+          example: test1234
+    createdUser:
+      type: string
+      example: New user created with an id of 2
+    BadRequest:
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/ValidationError.yaml
+    token:
+      type: string
+      example: sample token
+    locationId:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Example
+        role:
+          type: string
+          example: This is an example location.
+    location:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Example
+        role:
+          type: string
+          example: This is an example location.
+    menusId:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Example Menu
+        mealType:
+          type: string
+          example: Breakfast
+        date:
+          type: string
+          example: placeholder string
+        diningLocationId:
+          type: integer
+          example: 1
+    menus:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Example Menu
+        mealType:
+          type: string
+          example: Breakfast
+        date:
+          type: string
+          example: placeholder string
+        diningLocationId:
+          type: integer
+          example: 1
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        email:
+          type: string
+          example: test@gmail.com
+        role:
+          type: string
+          enum:
+            - USER
+            - ADMIN
+          example: USER
+        preferences:
+          type: string
+          example: placeholder
+        notificationEnabled:
+          type: boolean
+          example: false
+        favoriteFoods:
+          type: string
+          example: placeholder

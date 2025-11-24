@@ -60,3 +60,14 @@ export const validateUpdateUser = [
 
   handleValidationErrors,
 ];
+
+export const validateFoodId = [
+  param('id')
+  .exists({ values: 'falsy' })
+  .withMessage('food id is requred.')
+  .bail()
+  .isInt({min: 1})
+  .withMessage('food id must be a positive int greater than 0.'),
+
+  handleValidationErrors,
+];

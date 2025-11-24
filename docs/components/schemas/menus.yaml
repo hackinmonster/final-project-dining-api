@@ -1,0 +1,14 @@
+type: object
+properties:
+  name:
+    type: string
+    example: Example Menu
+  mealType:
+    type: string
+    example: Breakfast
+  date: 
+    type: string
+    example: placeholder string
+  diningLocationId:
+    type: integer
+    example: 1
