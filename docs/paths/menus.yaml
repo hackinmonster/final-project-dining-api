@@ -1,0 +1,27 @@
+get:
+  summary: Get all menus
+  tags:
+    - Menus
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/menusId.yaml
+post:
+  summary: Create menu 
+  tags:
+    - Menus
+  # TODO: more responses
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/menusId.yaml

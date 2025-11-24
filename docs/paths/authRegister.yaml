@@ -1,0 +1,23 @@
+post:
+  summary: User Registration
+  tags:
+    - Authentication
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/userAccount.yaml
+  responses:
+    '201':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/createdUser.yaml
+    '400':
+      description: NOT FOUND
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml
