@@ -4,8 +4,6 @@ get:
     - Users
   security:
   - bearerAuth: []
-    type: http
-    scheme: bearer
   # TODO: more responses
   responses:
     '200':
@@ -22,8 +20,6 @@ put:
     - Users
   security:
   - bearerAuth: []
-    type: http
-    scheme: bearer
   # TODO: more responses
   responses:
     '200':

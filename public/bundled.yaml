@@ -186,6 +186,8 @@ paths:
       summary: List all users (admin-only)
       tags:
         - Users
+      security:
+        - BearerAuth: []
       responses:
         '200':
           description: OK
@@ -202,8 +204,6 @@ paths:
         - Users
       security:
         - bearerAuth: []
-          type: http
-          scheme: bearer
       responses:
         '200':
           description: OK
@@ -219,8 +219,6 @@ paths:
         - Users
       security:
         - bearerAuth: []
-          type: http
-          scheme: bearer
       responses:
         '200':
           description: OK
@@ -231,6 +229,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
   schemas:
     userAccount:
       type: object
@@ -331,7 +333,3 @@ components:
         favoriteFoods:
           type: string
           example: placeholder
-securitySchemes:
-  bearerAuth:
-    type: http
-    scheme: bearer

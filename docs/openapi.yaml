@@ -4,12 +4,11 @@ info:
   version: 1.0.0
 servers:
   - url: http://localhost:8080/api
-# TODO: SETUP AUTH to get authenticated requests working!
-securitySchemes:
-  bearerAuth:
-    type: http
-    scheme: bearer
-    # $ref: securitySchemes/bearerAuth.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
 paths:
   /auth/signup:
     $ref: paths/authRegister.yaml
@@ -27,4 +26,3 @@ paths:
     $ref: paths/users.yaml
   /users/me:
     $ref: paths/usersMe.yaml
-

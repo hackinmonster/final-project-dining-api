@@ -2,6 +2,8 @@ get:
   summary: List all users (admin-only)
   tags:
     - Users
+  security:
+    - BearerAuth: []
   responses:
     '200':
       description: OK
