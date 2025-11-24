@@ -6,18 +6,25 @@ import {
     getFoodItemByIdHandler,
     updateFoodItemHandler,
     deleteFoodItemHandler    
- } from '../controllers/foodController.js';
+} from '../controllers/foodController.js';
+
+import {
+    validateFoodItemId,
+    validateFoodQuery,
+    validateCreateFoodItem,
+    validateUpdateFoodItem,
+} from '../middleware/foodValidators.js'
 
 const router = express.Router();
 
-router.get('/', getAllFoodItemsHandler);
+router.get('/', validateFoodQuery, getAllFoodItemsHandler);
 
-router.post('/', createFoodItemHandler);
+router.post('/', validateCreateFoodItem,createFoodItemHandler);
 
-router.get('/:id', getFoodItemByIdHandler);
+router.get('/:id', validateFoodItemId, getFoodItemByIdHandler);
 
-router.put('/:id', updateFoodItemHandler)
+router.put('/:id', validateFoodItemId, validateUpdateFoodItem, updateFoodItemHandler)
 
-router.delete('/:id', deleteFoodItemHandler)
+router.delete('/:id', validateFoodItemId, deleteFoodItemHandler)
 
 export default router;
