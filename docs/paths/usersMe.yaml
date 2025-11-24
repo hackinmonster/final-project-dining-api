@@ -1,0 +1,37 @@
+get:
+  summary: Get current User 
+  tags:
+    - Users
+  security:
+  - bearerAuth: []
+    type: http
+    scheme: bearer
+  # TODO: more responses
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/User.yaml
+put:
+  summary: Update user info 
+  tags:
+    - Users
+  security:
+  - bearerAuth: []
+    type: http
+    scheme: bearer
+  # TODO: more responses
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/User.yaml
+  

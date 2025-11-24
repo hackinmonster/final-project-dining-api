@@ -1,0 +1,8 @@
+type: object
+properties:
+  email:
+    type: string
+    example: test@uncc.edu
+  password: 
+    type: string
+    example: test1234

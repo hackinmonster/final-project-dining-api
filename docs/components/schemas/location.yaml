@@ -1,0 +1,8 @@
+type: object
+properties:
+  name:
+    type: string
+    example: Example
+  role:
+    type: string
+    example: This is an example location.

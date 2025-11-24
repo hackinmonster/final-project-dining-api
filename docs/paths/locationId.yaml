@@ -1,0 +1,39 @@
+get:
+  summary: Get Location by Id
+  tags:
+    - Dining Locations
+  parameters:
+    - name: id 
+      in: path
+      schema:
+        type: integer
+      required: true
+  # TODO: Add responses
+put:
+  summary: Update Location by Id
+  tags:
+    - Dining Locations
+  parameters:
+    - name: id 
+      in: path
+      schema:
+        type: integer
+      required: true
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/location.yaml
+  # TODO: Add responses
+delete:
+  summary: Delete location by Id
+  tags:
+    - Dining Locations  
+  parameters:
+    - name: id 
+      in: path
+      schema:
+        type: integer
+      required: true
+  # TODO: Add responses

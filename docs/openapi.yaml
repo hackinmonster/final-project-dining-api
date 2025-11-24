@@ -4,59 +4,27 @@ info:
   version: 1.0.0
 servers:
   - url: http://localhost:8080/api
-paths: 
-  # /auth/signup:
-  #   post:
-  #     summary: User signup
-  #     tags: 
-  #     - Auth 
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-
-  #     responses:
-  #       '201':
-  #         description: OK
-  #         content:
-
-
+# TODO: SETUP AUTH to get authenticated requests working!
+securitySchemes:
+  bearerAuth:
+    type: http
+    scheme: bearer
+    # $ref: securitySchemes/bearerAuth.yaml
+paths:
+  /auth/signup:
+    $ref: paths/authRegister.yaml
+  /auth/login:
+    $ref: paths/authLogin.yaml
+  /locations:
+    $ref: paths/location.yaml
+  /locations/{id}:
+    $ref: paths/locationId.yaml
+  /menus:
+    $ref: paths/menus.yaml
+  /menus/{id}:
+    $ref: paths/menusId.yaml
   /users:
-    get:
-      summary: List all users (admin-only)
-      tags:
-        - Users
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'    
-components:
-  schemas:
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        email:
-          type: string
-          example: test@gmail.com
-        role:
-          type: string
-          enum: [USER, ADMIN]
-          example: USER
-        preferences:
-          type: string
-          example: placeholder
-        notificationEnabled:
-          type: boolean
-          example: false
-        favoriteFoods:
-          type: string
-          example: placeholder
+    $ref: paths/users.yaml
+  /users/me:
+    $ref: paths/usersMe.yaml
+
