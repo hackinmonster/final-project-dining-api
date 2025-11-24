@@ -60,6 +60,17 @@ export const validateCreateFoodItem = [
         .escape()
         .notEmpty()
         .withMessage('Ingredient items cannot be empty strings'),
+    
+    body('allergens')
+        .isArray({ min: 1 })
+        .withMessage('allergens must not be empty'),
+
+    body('allergens.*')
+        .isString()
+        .trim()
+        .escape()
+        .notEmpty()
+        .withMessage('allergens items cannot be empty strings'),
 
     body('nutrition')
         .isObject()
