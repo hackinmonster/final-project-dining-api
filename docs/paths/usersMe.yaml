@@ -14,6 +14,12 @@ get:
             type: array
             items:
               $ref: ../components/schemas/userId.yaml
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml
 put:
   summary: Update current user's information
   tags:
@@ -35,11 +41,25 @@ put:
             type: array
             items:
               $ref: ../components/schemas/userId.yaml
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml
 delete:
   summary: Delete current user
   tags:
-    - User
+    - Users
+  security:
+  - bearerAuth: []
   responses:
     '204':
       description: OK
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml
   # TODO: Add responses

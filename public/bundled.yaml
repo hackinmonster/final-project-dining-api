@@ -7,7 +7,7 @@ servers:
 paths:
   /auth/signup:
     post:
-      summary: User Registration
+      summary: User Registration/Create User
       tags:
         - Authentication
       requestBody:
@@ -15,7 +15,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/userAccount'
+              $ref: '#/components/schemas/userLogin'
       responses:
         '201':
           description: OK
@@ -24,7 +24,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/createdUser'
         '400':
-          description: NOT FOUND
+          description: Bad Request
           content:
             application/json:
               schema:
@@ -39,7 +39,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/userAccount'
+              $ref: '#/components/schemas/userLogin'
       responses:
         '201':
           description: OK
@@ -67,10 +67,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/locationId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
     post:
       summary: Create location
       tags:
         - Dining Locations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/location'
       responses:
         '200':
           description: OK
@@ -80,6 +92,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/locationId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
   /locations/{id}:
     get:
       summary: Get Location by Id
@@ -91,6 +109,21 @@ paths:
           schema:
             type: integer
           required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/locationId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
     put:
       summary: Update Location by Id
       tags:
@@ -107,6 +140,21 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/location'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/locationId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
     delete:
       summary: Delete location by Id
       tags:
@@ -117,6 +165,18 @@ paths:
           schema:
             type: integer
           required: true
+      responses:
+        '204':
+          description: No content
+          content:
+            application/json:
+              schema: null
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
   /menus:
     get:
       summary: Get all menus
@@ -131,10 +191,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/menusId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
     post:
       summary: Create menu
       tags:
         - Menus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/menus'
       responses:
         '200':
           description: OK
@@ -144,6 +216,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/menusId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
   /menus/{id}:
     get:
       summary: Get Menu by Id
@@ -155,6 +233,21 @@ paths:
           schema:
             type: integer
           required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/menusId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
     put:
       summary: Update Menu by Id
       tags:
@@ -171,6 +264,21 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/menus'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/menusId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
     delete:
       summary: Delete Menu by Id
       tags:
@@ -181,6 +289,15 @@ paths:
           schema:
             type: integer
           required: true
+      responses:
+        '204':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
   /users:
     get:
       summary: List all users (admin-only)
@@ -196,10 +313,16 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/userId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
   /users/me:
     get:
-      summary: Get current User
+      summary: Get current user
       tags:
         - Users
       security:
@@ -212,11 +335,60 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/userId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
     put:
-      summary: Update user info
+      summary: Update current user's information
       tags:
         - Users
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateUser'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/userId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+    delete:
+      summary: Delete current user
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      responses:
+        '204':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+  /users/me/favorites:
+    get:
+      summary: Get current user's favorites
+      tags:
+        - User Favorites
       security:
         - bearerAuth: []
       responses:
@@ -227,14 +399,75 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/favorites'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+  /users/me/favorites/{id}:
+    put:
+      summary: Add FoodItem to Favorites by foodId
+      tags:
+        - User Favorites
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/favorites'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+    delete:
+      summary: Delete FoodItem from Favorites by foodId
+      tags:
+        - User Favorites
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/favorites'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
   schemas:
-    userAccount:
+    userLogin:
       type: object
       properties:
         email:
@@ -264,7 +497,7 @@ components:
         name:
           type: string
           example: Example
-        role:
+        description:
           type: string
           example: This is an example location.
     location:
@@ -273,7 +506,7 @@ components:
         name:
           type: string
           example: Example
-        role:
+        description:
           type: string
           example: This is an example location.
     menusId:
@@ -303,13 +536,10 @@ components:
         mealType:
           type: string
           example: Breakfast
-        date:
-          type: string
-          example: placeholder string
         diningLocationId:
           type: integer
           example: 1
-    User:
+    userId:
       type: object
       properties:
         id:
@@ -333,3 +563,21 @@ components:
         favoriteFoods:
           type: string
           example: placeholder
+    updateUser:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@gmail.com
+        password:
+          type: string
+          example: test1234
+        notificationEnabled:
+          type: boolean
+          example: false
+    favorites:
+      type: object
+      properties:
+        test:
+          type: string
+          example: Placeholder for food refactor

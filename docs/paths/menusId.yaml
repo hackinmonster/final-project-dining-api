@@ -9,6 +9,21 @@ get:
         type: integer
       required: true
   # TODO: Add responses
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/menusId.yaml
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml
 put:
   summary: Update Menu by Id
   tags:
@@ -26,6 +41,21 @@ put:
         schema:
           $ref: ../components/schemas/menus.yaml
   # TODO: Add responses
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/menusId.yaml
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml
 delete:
   summary: Delete Menu by Id
   tags:
@@ -36,4 +66,13 @@ delete:
       schema:
         type: integer
       required: true
+  responses:
+    '204':
+      description: OK
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml
   # TODO: Add responses

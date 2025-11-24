@@ -1,7 +1,7 @@
 get:
   summary: Get current user's favorites
   tags:
-    - Users
+    - User Favorites
   security:
   - bearerAuth: []
   # TODO: more responses
@@ -13,4 +13,10 @@ get:
           schema:
             type: array
             items:
-              $ref: ../components/schemas/userId.yaml
+              $ref: ../components/schemas/favorites.yaml
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml
