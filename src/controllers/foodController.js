@@ -16,7 +16,7 @@ export async function getAllFoodItemsHandler(req, res) {
 }
 
 export async function createFoodItemHandler(req,res) {
-    let data = req.body;
+    let data = matchedData(req);
     let foodItem = await createFoodItem(data);
     res.status(201).json(foodItem);
 }
