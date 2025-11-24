@@ -6,8 +6,8 @@ import {
     remove
 } from "../repositories/foodrepo.js";
 
-export async function getAllFoodItems(query) {
-    return await getAll(query);
+export async function getAllFoodItems(filter) {
+    return await getAll(filter);
 }
 
 export async function getFoodItemById(id) {

@@ -9,8 +9,44 @@ export const validateFoodItemId = [
 ];
 
 export const validateFoodQuery = [
-    query('name').optional().trim().escape().toLowerCase(),
-    handleValidationErrors,
+    query('search')
+        .optional()
+        .trim()
+        .escape(),
+    
+    query('isVegetarian')
+        .optional()
+        .isBoolean()
+        .withMessage('isVegetarian must be a boolean (true/false)'),
+
+    query('isVegan')
+        .optional()
+        .isBoolean()
+        .withMessage('isVegan must be a boolean (true/false)'),
+
+    query('sortBy')
+        .optional()
+        .trim()
+        .escape()
+        .isIn(['name', 'portionSize', 'id']) // Add any other allowed sort fields
+        .withMessage('Invalid sort field'),
+
+    query('sortOrder')
+        .optional()
+        .trim()
+        .escape()
+        .isIn(['asc', 'desc'])
+        .withMessage('Sort order must be asc or desc'),
+
+    query('limit')
+        .optional()
+        .isInt({ min: 1 })
+        .withMessage('Limit must be a positive integer'),
+
+    query('offset')
+        .optional()
+        .isInt({ min: 0 })
+        .withMessage('Offset must be a non-negative integer'),
 ];
 
 export const validateCreateFoodItem = [

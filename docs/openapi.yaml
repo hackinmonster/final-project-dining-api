@@ -20,8 +20,6 @@ paths:
   #       '201':
   #         description: OK
   #         content:
-
-
   /users:
     get:
       summary: List all users (admin-only)
@@ -35,7 +33,183 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'    
+                  $ref: '#/components/schemas/User'
+
+  /foods:
+    get:
+      summary: Get all food items
+      description: Retrieve a list of all food items with optional filtering, sorting, and pagination.
+      tags:
+        - Food Items
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Search term for name or description (case-insensitive).
+          required: false
+        - in: query
+          name: isVegetarian
+          schema:
+            type: boolean
+          description: Filter for vegetarian items.
+          required: false
+        - in: query
+          name: isVegan
+          schema:
+            type: boolean
+          description: Filter for vegan items.
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+            enum: [name, portionSize, id]
+            default: name
+          description: Field to sort by.
+          required: false
+        - in: query
+          name: sortOrder
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+          description: Sort order (ascending or descending).
+          required: false
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+          description: Number of items to return.
+          required: false
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          description: Number of items to skip.
+          required: false
+      responses:
+        '200':
+          description: A list of food items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FoodItem'
+    post:
+      summary: Create a new food item
+      description: Create a new food item with nutrition and ingredient details.
+      tags:
+        - Food Items
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FoodInput'
+      responses:
+        '201':
+          description: Food item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodItem'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /foods/{id}:
+    get:
+      summary: Get a food item by ID
+      description: Retrieve detailed information about a specific food item.
+      tags:
+        - Food Items
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+          description: Numeric ID of the food item
+      responses:
+        '200':
+          description: Food item details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodItem'
+        '404':
+          description: Food item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Update a food item
+      description: Update an existing food item. At least one field must be provided.
+      tags:
+        - Food Items
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+          description: Numeric ID of the food item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FoodUpdate'
+      responses:
+        '200':
+          description: Food item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodItem'
+        '400':
+          description: Validation error or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Food item not found
+    delete:
+      summary: Delete a food item
+      description: Remove a food item from the database.
+      tags:
+        - Food Items
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+          description: Numeric ID of the food item
+      responses:
+        '204':
+          description: Food item deleted successfully (no content)
+        '404':
+          description: Food item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+ 
 components:
   schemas:
     User:
@@ -60,3 +234,130 @@ components:
         favoriteFoods:
           type: string
           example: placeholder
+    Nutrition:
+      type: object
+      required:
+        - calories
+        - fat
+        - protein
+        - carbs
+      properties:
+        calories:
+          type: integer
+          minimum: 0
+          description: Energy content in kcal
+          example: 350
+        fat:
+          type: string
+          minLength: 3
+          description: Total fat content (e.g., "12g")
+          example: "12g"
+        protein:
+          type: string
+          minLength: 3
+          description: Protein content (e.g., "20g")
+          example: "20g"
+        carbs:
+          type: string
+          minLength: 3
+          description: Carbohydrate content (e.g., "45g")
+          example: "45g"
+
+    FoodInput:
+      type: object
+      required:
+        - name
+        - description
+        - portionSize
+        - ingredients
+        - allergens
+        - nutrition
+        - isVegetarian
+        - isVegan
+      properties:
+        name:
+          type: string
+          minLength: 3
+          example: "Grilled Chicken Salad"
+        description:
+          type: string
+          minLength: 5
+          example: "Fresh greens with grilled chicken breast and vinaigrette."
+        portionSize:
+          type: string
+          minLength: 3
+          example: "Large"
+        ingredients:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            minLength: 1
+          example: ["Chicken", "Lettuce", "Tomatoes", "Cucumber"]
+        nutrition:
+          $ref: '#/components/schemas/Nutrition'
+        allergens:
+          type: array
+          items:
+            type: string
+          example: ["Soy", "Gluten"]
+          description: List of allergens present in the food.
+        isVegetarian:
+          type: boolean
+          example: false
+        isVegan:
+          type: boolean
+          example: false
+
+    FoodUpdate:
+      type: object
+      description: Fields to update. At least one field is required.
+      properties:
+        name:
+          type: string
+          minLength: 3
+        description:
+          type: string
+          minLength: 5
+        portionSize:
+          type: string
+          minLength: 3
+        ingredients:
+          type: array
+          items:
+            type: string
+            minLength: 1
+        nutrition:
+          $ref: '#/components/schemas/Nutrition'
+        allergens:
+          type: array
+          items:
+            type: string
+        isVegetarian:
+          type: boolean
+        isVegan:
+          type: boolean
+
+    FoodItem:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+        - $ref: '#/components/schemas/FoodInput'
+    
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: "Cannot find Food Item with id: 99"
+        errors:
+          type: array
+          description: Detailed validation errors (if applicable)
+          items:
+            type: object
