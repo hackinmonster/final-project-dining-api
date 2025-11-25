@@ -17,13 +17,13 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/foodsSchema.yaml#/FoodItem
+            $ref: '../components/schemas/foodsSchema.yaml#/FoodItem'
     '404':
       description: Food item not found
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/foodsSchema.yaml#/Error
+            $ref: '../components/schemas/foodsSchema.yaml#/Error'
 put:
   summary: Update a food item
   description: Update an existing food item. At least one field must be provided.
@@ -42,20 +42,20 @@ put:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/foodsSchemaId.yaml#/FoodUpdate
+          $ref: '../components/schemas/foodsIdSchema.yaml#/FoodUpdate'
   responses:
     '200':
       description: Food item updated successfully
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/foodsSchema.yaml#/FoodItem
+            $ref: '../components/schemas/foodsSchema.yaml#/FoodItem'
     '400':
       description: Validation error or missing fields
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/foodsSchema.yaml#/Error
+            $ref: '../components/schemas/foodsSchema.yaml#/Error'
     '404':
       description: Food item not found
 delete:
@@ -79,4 +79,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/foodsSchema.yaml#/Error
+            $ref: '../components/schemas/foodsSchema.yaml#/Error'

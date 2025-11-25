@@ -5,10 +5,54 @@ get:
     - Food Items
   parameters:
     - in: query
-      name: name
+      name: search
       schema:
         type: string
-      description: Filter food items by name (case-insensitive substring match).
+      description: Search term for name or description (case-insensitive).
+      required: false
+    - in: query
+      name: isVegetarian
+      schema:
+        type: boolean
+      description: Filter for vegetarian items.
+      required: false
+    - in: query
+      name: isVegan
+      schema:
+        type: boolean
+      description: Filter for vegan items.
+      required: false
+    - in: query
+      name: sortBy
+      schema:
+        type: string
+        enum: [name, portionSize, id]
+        default: name
+      description: Field to sort by.
+      required: false
+    - in: query
+      name: sortOrder
+      schema:
+        type: string
+        enum: [asc, desc]
+        default: asc
+      description: Sort order (ascending or descending).
+      required: false
+    - in: query
+      name: limit
+      schema:
+        type: integer
+        minimum: 1
+        default: 10
+      description: Number of items to return.
+      required: false
+    - in: query
+      name: offset
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+      description: Number of items to skip.
       required: false
   responses:
     '200':
@@ -18,7 +62,7 @@ get:
           schema:
             type: array
             items:
-              $ref: ../components/schemas/foods.yaml#/FoodItem
+              $ref: ../components/schemas/foodsSchema.yaml#/FoodItem
 post:
   summary: Create a new food item
   description: Create a new food item with nutrition and ingredient details.
@@ -29,17 +73,17 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/foods.yaml#/FoodInput
+          $ref: '../components/schemas/foodsSchema.yaml#/FoodInput'
   responses:
     '201':
       description: Food item created successfully
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/foods.yaml#/FoodItem
+            $ref: ../components/schemas/foodsSchema.yaml#/FoodItem
     '400':
       description: Validation error
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/foods.yaml#/Error
+            $ref: ../components/schemas/foodsSchema.yaml#/Error
