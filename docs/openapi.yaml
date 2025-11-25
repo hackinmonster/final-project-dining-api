@@ -5,7 +5,7 @@ info:
 servers:
   - url: http://localhost:8080/api
     description: "Local Development"
-  - url: https://final-project-dining-api-1.onrender.com
+  - url: https://final-project-dining-api-1.onrender.com/api
     description: "Production Development"
 components:
   securitySchemes:
