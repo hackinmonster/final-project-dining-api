@@ -7,7 +7,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/userAccount.yaml
+          $ref: ../components/schemas/userLogin.yaml
   responses:
     '201':
       description: OK

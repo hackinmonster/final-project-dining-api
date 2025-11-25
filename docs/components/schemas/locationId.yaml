@@ -6,6 +6,6 @@ properties:
   name:
     type: string
     example: Example
-  role:
+  description:
     type: string
     example: This is an example location.

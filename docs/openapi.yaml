@@ -26,3 +26,7 @@ paths:
     $ref: paths/users.yaml
   /users/me:
     $ref: paths/usersMe.yaml
+  /users/me/favorites:
+    $ref: paths/getFavorites.yaml
+  /users/me/favorites/{id}:
+    $ref: paths/favoritesId.yaml
