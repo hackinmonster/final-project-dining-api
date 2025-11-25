@@ -1,0 +1,45 @@
+get:
+  summary: Get all food items
+  description: Retrieve a list of all food items. Can be filtered by name.
+  tags:
+    - Food Items
+  parameters:
+    - in: query
+      name: name
+      schema:
+        type: string
+      description: Filter food items by name (case-insensitive substring match).
+      required: false
+  responses:
+    '200':
+      description: A list of food items
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/foods.yaml#/FoodItem
+post:
+  summary: Create a new food item
+  description: Create a new food item with nutrition and ingredient details.
+  tags:
+    - Food Items
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/foods.yaml#/FoodInput
+  responses:
+    '201':
+      description: Food item created successfully
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/foods.yaml#/FoodItem
+    '400':
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/foods.yaml#/Error
