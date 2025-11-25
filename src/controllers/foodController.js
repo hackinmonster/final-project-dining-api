@@ -10,8 +10,29 @@ import {
 import { matchedData } from 'express-validator';
 
 export async function getAllFoodItemsHandler(req, res) {
-    let query = matchedData(req);
-    let result = await getAllFoodItems(query);
+    const {
+        search,
+        isVegetarian,
+        isVegan,
+        sortBy = 'name',
+        sortOrder = 'asc',
+        limit = 10,
+        offset = 0
+    } = req.query;
+
+    const filter = {};
+    
+    if (search) filter.search = search;
+
+    if (isVegetarian !== undefined) filter.isVegetarian = isVegetarian === 'true';
+    if (isVegan !== undefined) filter.isVegan = isVegan === 'true';
+
+    filter.sortBy = sortBy;
+    filter.sortOrder = sortOrder;
+    filter.limit = parseInt(limit);
+    filter.offset = parseInt(offset);
+
+    let result = await getAllFoodItems(filter);
     res.status(200).json(result);
 }
 

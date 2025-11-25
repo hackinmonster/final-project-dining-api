@@ -22,6 +22,10 @@ paths:
     $ref: paths/menus.yaml
   /menus/{id}:
     $ref: paths/menusId.yaml
+  /foods:
+    $ref: paths/foods.yaml
+  /foods/{id}:
+    $ref: paths/foodsId.yaml
   /users:
     $ref: paths/users.yaml
   /users/me:

@@ -1,0 +1,28 @@
+FoodUpdate:
+  type: object
+  description: Fields to update. At least one field is required.
+  properties:
+    name:
+      type: string
+      minLength: 3
+    description:
+      type: string
+      minLength: 5
+    portionSize:
+      type: string
+      minLength: 3
+    ingredients:
+      type: array
+      items:
+        type: string
+        minLength: 1
+    nutrition:
+      $ref: './foodsSchema.yaml#/Nutrition'
+    allergens:
+      type: array
+      items:
+        type: string
+    isVegetarian:
+      type: boolean
+    isVegan:
+      type: boolean

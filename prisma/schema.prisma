@@ -28,7 +28,7 @@ model Menu {
   mealType String
   date DateTime @default(now())
   diningLocationId Int
-  diningLocation DiningLocation @relation(fields: [diningLocationId], references: [id])
+  diningLocation DiningLocation @relation(fields: [diningLocationId], references: [id], onDelete: Cascade)
   @@map("menus")
 }
 

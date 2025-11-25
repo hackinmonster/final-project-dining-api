@@ -1,0 +1,82 @@
+get:
+  summary: Get a food item by ID
+  description: Retrieve detailed information about a specific food item.
+  tags:
+    - Food Items
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+        minimum: 1
+      required: true
+      description: Numeric ID of the food item
+  responses:
+    '200':
+      description: Food item details
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/foodsSchema.yaml#/FoodItem'
+    '404':
+      description: Food item not found
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/foodsSchema.yaml#/Error'
+put:
+  summary: Update a food item
+  description: Update an existing food item. At least one field must be provided.
+  tags:
+    - Food Items
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+        minimum: 1
+      required: true
+      description: Numeric ID of the food item
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/foodsIdSchema.yaml#/FoodUpdate'
+  responses:
+    '200':
+      description: Food item updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/foodsSchema.yaml#/FoodItem'
+    '400':
+      description: Validation error or missing fields
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/foodsSchema.yaml#/Error'
+    '404':
+      description: Food item not found
+delete:
+  summary: Delete a food item
+  description: Remove a food item from the database.
+  tags:
+    - Food Items
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+        minimum: 1
+      required: true
+      description: Numeric ID of the food item
+  responses:
+    '204':
+      description: Food item deleted successfully (no content)
+    '404':
+      description: Food item not found
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/foodsSchema.yaml#/Error'

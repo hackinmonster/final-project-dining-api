@@ -1,7 +1,27 @@
 import prisma from "../config/db.js";
 
-export async function getAll(query){
-    const result = await prisma.FoodItem.findMany();
+export async function getAll(filter){
+    const conditions = {};
+    if (filter.isVegetarian !== undefined) {
+        conditions.isVegetarian = filter.isVegetarian;
+    }
+    if (filter.isVegan !== undefined) {
+        conditions.isVegan = filter.isVegan;
+    }
+
+    if (filter.search) {
+        conditions.OR = [
+            { name: { contains: filter.search, mode: 'insensitive' } },
+            { description: { contains: filter.search, mode: 'insensitive' } }
+        ]
+    }
+
+    const result = await prisma.FoodItem.findMany({
+        where: conditions,
+        orderBy: { [filter.sortBy]: filter.sortOrder },
+        take: filter.limit,
+        skip: filter.offset
+    });
 
     return result;
 }
