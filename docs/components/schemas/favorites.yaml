@@ -1,0 +1,5 @@
+type: object
+properties:
+  test:
+    type: string
+    example: Placeholder for food refactor

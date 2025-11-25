@@ -6,9 +6,6 @@ properties:
   mealType:
     type: string
     example: Breakfast
-  date: 
-    type: string
-    example: placeholder string
   diningLocationId:
     type: integer
     example: 1

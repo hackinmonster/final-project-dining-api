@@ -11,11 +11,23 @@ get:
             type: array
             items:
               $ref: ../components/schemas/menusId.yaml
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml
 post:
   summary: Create menu 
   tags:
     - Menus
   # TODO: more responses
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/menus.yaml
   responses:
     '200':
       description: OK
@@ -25,3 +37,9 @@ post:
             type: array
             items:
               $ref: ../components/schemas/menusId.yaml
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml

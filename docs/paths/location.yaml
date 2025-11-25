@@ -11,10 +11,22 @@ get:
             type: array
             items:
               $ref: ../components/schemas/locationId.yaml
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml
 post:
   summary: Create location 
   tags:
     - Dining Locations
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/location.yaml
   # TODO: more responses
   responses:
     '200':
@@ -25,3 +37,9 @@ post:
             type: array
             items:
               $ref: ../components/schemas/locationId.yaml
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml

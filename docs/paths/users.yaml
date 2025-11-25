@@ -12,4 +12,10 @@ get:
           schema:
             type: array
             items:
-              $ref: ../components/schemas/User.yaml
+              $ref: ../components/schemas/userId.yaml
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/BadRequest.yaml

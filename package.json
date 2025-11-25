@@ -10,7 +10,8 @@
     "dev": "node --env-file=.env --watch src/server.js",
     "seed": "node prisma/seed.js",
     "postinstall": "npx prisma migrate deploy && npm run seed",
-    "bundle": "npx @redocly/cli bundle docs/openapi.yaml -o public/bundled.yaml"
+    "bundle": "npx @redocly/cli bundle docs/openapi.yaml -o public/bundled.yaml",
+    "split": "npx @redocly/cli split docs/openapi.yaml --outDir docs/"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",

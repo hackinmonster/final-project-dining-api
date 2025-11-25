@@ -1,5 +1,5 @@
 post:
-  summary: User Registration
+  summary: User Registration/Create User
   tags:
     - Authentication
   requestBody:
@@ -7,7 +7,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/userAccount.yaml
+          $ref: ../components/schemas/userLogin.yaml
   responses:
     '201':
       description: OK
@@ -16,7 +16,7 @@ post:
           schema:
             $ref: ../components/schemas/createdUser.yaml
     '400':
-      description: NOT FOUND
+      description: Bad Request
       content:
         application/json:
           schema:

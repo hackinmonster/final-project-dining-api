@@ -2,8 +2,10 @@ type: object
 properties:
   error:
     type: string
-    example: not valid
+    example: Bad Request
   details:
     type: array
     items:
-      type: string
+      error:
+        type: string
+        example: Error, bad request

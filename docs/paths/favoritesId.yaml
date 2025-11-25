@@ -1,45 +1,15 @@
-get:
-  summary: Get Location by Id
-  tags:
-    - Dining Locations
-  parameters:
-    - name: id 
-      in: path
-      schema:
-        type: integer
-      required: true
-  # TODO: Add responses
-  responses:
-    '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: ../components/schemas/locationId.yaml
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: ../components/responses/BadRequest.yaml
 put:
-  summary: Update Location by Id
+  summary: Add FoodItem to Favorites by foodId
   tags:
-    - Dining Locations
+    - User Favorites
+  security:
+  - bearerAuth: []
   parameters:
     - name: id 
       in: path
       schema:
         type: integer
       required: true
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          $ref: ../components/schemas/location.yaml
   # TODO: Add responses
   responses:
     '200':
@@ -49,18 +19,19 @@ put:
           schema:
             type: array
             items:
-              $ref: ../components/schemas/locationId.yaml
+              $ref: ../components/schemas/favorites.yaml
     '400':
       description: Bad Request
       content:
         application/json:
           schema:
             $ref: ../components/responses/BadRequest.yaml
-  
 delete:
-  summary: Delete location by Id
+  summary: Delete FoodItem from Favorites by foodId
   tags:
-    - Dining Locations  
+    - User Favorites
+  security:
+  - bearerAuth: []
   parameters:
     - name: id 
       in: path
@@ -69,11 +40,14 @@ delete:
       required: true
   # TODO: Add responses
   responses:
-    '204':
-      description: No content
+    '200':
+      description: OK
       content:
         application/json:
           schema:
+            type: array
+            items:
+              $ref: ../components/schemas/favorites.yaml
     '400':
       description: Bad Request
       content:
