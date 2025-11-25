@@ -7,19 +7,23 @@ async function main() {
   console.log("Starting database seed...");
 
   const adminPassword = await bcrypt.hash("Admin123!", 10);
-  const admin = await prisma.user.create({
-    data: {
+  const admin = await prisma.user.upsert({
+    where: { email: "admin@uncc.edu" }, 
+    update: {},                         
+    create: {
       email: "admin@uncc.edu",
       password: adminPassword,
       role: "ADMIN",
       notificationEnabled: true,
     },
   });
-  console.log("→ Admin created:", admin.email);
+  console.log("→ Admin upserted:", admin.email);
 
   const studentPassword = await bcrypt.hash("Student123!", 10);
-  const student = await prisma.user.create({
-    data: {
+  const student = await prisma.user.upsert({
+    where: { email: "student@uncc.edu" },
+    update: {},
+    create: {
       email: "student@uncc.edu",
       password: studentPassword,
       role: "USER",
@@ -30,7 +34,7 @@ async function main() {
       },
     },
   });
-  console.log("→ Student created:", student.email);
+  console.log("→ Student upserted:", student.email);
 
   const sovi = await prisma.diningLocation.create({
     data: {
@@ -88,14 +92,24 @@ async function main() {
     },
   });
 
-  await prisma.user.update({
-    where: { id: student.id },
-    data: {
-      favoriteFoods: {
-        connect: [{ id: pizza.id }, { id: salad.id }],
-      },
-    },
+  const studentWithFavorites = await prisma.user.findUnique({
+    where: { email: "student@uncc.edu" },
+    include: { favoriteFoods: true },
   });
+
+  if (!studentWithFavorites.favoriteFoods || studentWithFavorites.favoriteFoods.length === 0) {
+    await prisma.user.update({
+      where: { email: "student@uncc.edu" },
+      data: {
+        favoriteFoods: {
+          connect: [{ id: pizza.id }, { id: salad.id }],
+        },
+      },
+    });
+    console.log("→ Added favorites for student");
+  } else {
+    console.log("→ Student already has favorite foods, skipping connect");
+  }
 
   console.log("Seed completed successfully!");
 }
